@@ -1,0 +1,1482 @@
+﻿@page "/rantadi"
+@using Newtonsoft.Json
+
+<div class="d-flex flex-column bg-color-black h-100">
+    <div class="d-flex flex-column flex-wrap">
+        @foreach (var unitByGrade in UnitListDict)
+        {
+            switch (unitByGrade.Key)
+            {
+                case "Nomal":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn nomal-unit_color"
+                                    @onclick="@(e => AddOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+
+
+                    break;
+                case "Magic":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn magic-unit_color"
+                                    @onclick="@(e => AddOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+                    break;
+                case "Rare":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn rare-unit_color"
+                                    @onclick="@(e => AddOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+                    break;
+                case "Unique":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn unique-unit_color text-white"
+                                    @onclick="@(e => AddOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+                    break;
+                case "Epic":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn epic-unit_color"
+                                    @onclick="@(e => AddOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+                    break;
+                default:
+                    break;
+            }
+        }
+    </div>
+
+    <div class="mt-5">
+        <span class="lead text-white">내가 가진 목록</span>
+    </div>
+
+    <div class="d-flex mb-4">
+        @foreach (var unitByGrade in OwnUnitDict)
+        {
+            switch (unitByGrade.Key)
+            {
+                case "Nomal":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn nomal-unit_color"
+                                    @onclick="@(e => DeleteOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+
+
+                    break;
+                case "Magic":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn magic-unit_color"
+                                    @onclick="@(e => DeleteOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+                    break;
+                case "Rare":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn rare-unit_color"
+                                    @onclick="@(e => DeleteOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+                    break;
+                case "Unique":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn unique-unit_color"
+                                    @onclick="@(e => DeleteOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+                    break;
+                case "Epic":
+                    <div class="d-flex flex-wrap">
+                        @foreach (var unit in unitByGrade.Value)
+                        {
+                            <button class="btn epic-unit_color"
+                                    @onclick="@(e => DeleteOwnUnitDict(unitByGrade.Key, unit))">
+                                @unit
+                            </button>
+                        }
+                    </div>
+                    break;
+                default:
+                    break;
+            }
+        }
+    </div>
+
+    <div class="">
+        <span class="lead text-white">미션 목록</span>
+    </div>
+
+    <div class="container">
+        @foreach (var mission in cloneRantadiMissions)
+        {
+            <div class="row text-white">
+                <div class="col-4 px-0">
+                    <div class="d-flex flex-column justify-content-center h-100">
+                        <span>미션명:  @mission.MissionName</span>
+                    </div>
+                </div>
+                <div class="col-4 px-0">
+                    <div class="d-flex flex-column justify-content-center h-100">
+                        <span>@mission.MissionBenefit</span>
+                    </div>                    
+                </div>
+                <div class="col-4 px-0">
+                    <button class="btn btn-primary" @onclick="@(e => ToCompleteMission(mission))">미션 완료</button>
+                </div>
+            </div>
+            <div class="row mb-4 text-white">
+                <div class="col-2 nomal-unit_color">
+                    @{
+                        string nomalUnits = string.Join(", ", mission.NormalUnit);
+                    }
+                    <div class="d-flex flex-column justify-content-center h-100">
+                        <span>@nomalUnits</span>
+                    </div>
+                </div>
+                <div class="col-2 magic-unit_color">
+                    @{
+                        string magiUnits = string.Join(", ", mission.MagicUnit);
+                    }
+                    <div class="d-flex flex-column justify-content-center h-100">
+                        <span>@magiUnits</span>
+                    </div>
+                </div>
+                <div class="col-2 rare-unit_color">
+                    @{
+                        string rareUnits = string.Join(", ", mission.RarelUnit);
+                    }
+                    <div class="d-flex flex-column justify-content-center h-100">
+                        <span>@rareUnits</span>
+                    </div>
+                </div>
+                <div class="col-2 unique-unit_color">
+                    @{
+                        string uniqueUnits = string.Join(", ", mission.UniquelUnit);
+                    }
+                    <div class="d-flex flex-column justify-content-center h-100">
+                        <span>@uniqueUnits</span>
+                    </div>
+                </div>
+                <div class="col-2 epic-unit_color">
+                    @{
+                        string epicUnits = string.Join(", ", mission.EpiclUnit);
+                    }
+                    <div class="d-flex flex-column justify-content-center h-100">
+                        <span>@epicUnits</span>
+                    </div>
+                </div>
+                <div class="col-2">
+                    @{
+                        string citizen = string.Join(", ", mission.Citizen);
+                    }
+                    <div class="d-flex flex-column justify-content-center h-100">
+                        <span>@citizen</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@code {
+
+    private List<RantadiMission> cloneRantadiMissions = new();
+
+    private List<RantadiMission> rantadiMissions = new();
+
+    Dictionary<string, List<string>> OwnUnitDict = new();
+
+    Dictionary<string, List<string>> UnitListDict = new()
+{
+        {
+            "Nomal",
+            new List<string>
+{
+                RantadiUnits.Nomal_Hydralisk,
+                RantadiUnits.Nomal_Vulture,
+                RantadiUnits.Nomal_Dragoon,
+                RantadiUnits.Nomal_Marine,
+                RantadiUnits.Nomal_Wraith,
+                RantadiUnits.Nomal_Scout,
+                RantadiUnits.Nomal_Ultralist,
+                RantadiUnits.Nomal_Mutalisk,
+            }
+        },
+        {
+            "Magic",
+            new List<string>
+{
+                RantadiUnits.Magic_ManGhost,
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_Scout,
+                RantadiUnits.Magic_Firebat,
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_DarkTemplar,
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_Defiler,
+            }
+        },
+        {
+            "Rare",
+            new List<string>
+{
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Firebat,
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Dragoon,
+                RantadiUnits.Rare_Defiler,
+            }
+        },
+        {
+            "Unique",
+            new()
+{
+                RantadiUnits.Unique_Guardian,
+                RantadiUnits.Unique_Zergling,
+                RantadiUnits.Unique_Hydralisk,
+                RantadiUnits.Unique_DarkArchon,
+                RantadiUnits.Unique_Marine,
+                RantadiUnits.Unique_Valkyrie,
+                RantadiUnits.Unique_HighTemplar,
+                RantadiUnits.Unique_Reaver,
+            }
+        },
+        {
+            "Epic",
+            new()
+{
+                RantadiUnits.Epic_Lurker,
+                RantadiUnits.Epic_CloakingGhost,
+                RantadiUnits.Epic_Kerrigan,
+                RantadiUnits.Epic_HighTemplar,
+                RantadiUnits.Epic_Vulture,
+                RantadiUnits.Epic_Carrier,
+                RantadiUnits.Epic_Mutalisk,
+                RantadiUnits.Epic_Yamato,
+            }
+        },
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await SetMissions();
+    }
+
+    private async Task AddOwnUnitDict(string grade, string unit)
+    {
+        if (OwnUnitDict.TryGetValue(grade, out List<string> units))
+        {
+            OwnUnitDict[grade].Add(unit);
+
+            await CalculateMissionAtAdd(grade, unit);
+        }
+        else
+        {
+            OwnUnitDict.Add(grade, new()
+{
+                unit
+            });
+
+            await CalculateMissionAtAdd(grade, unit);
+        }
+    }
+
+    private async Task DeleteOwnUnitDict(string grade, string unit)
+    {
+        if (OwnUnitDict.TryGetValue(grade, out List<string> units))
+        {
+            units.Remove(unit);
+
+            await CalculateMissionAtDelete(grade, unit);
+        };
+    }
+
+    private async Task CalculateMissionAtAdd(string grade, string unit)
+    {
+        if (grade.Contains("Nomal"))
+        {
+            foreach (var mission in cloneRantadiMissions)
+            {
+                mission.NormalUnit.Remove(unit);
+            }
+        }
+        else if (grade.Contains("Magic"))
+        {
+            foreach (var mission in cloneRantadiMissions)
+            {
+                mission.MagicUnit.Remove(unit);
+            }
+        }
+        else if (grade.Contains("Rare"))
+        {
+            foreach (var mission in cloneRantadiMissions)
+            {
+                mission.RarelUnit.Remove(unit);
+            }
+        }
+        else if (grade.Contains("Unique"))
+        {
+            foreach (var mission in cloneRantadiMissions)
+            {
+                mission.UniquelUnit.Remove(unit);
+            }
+        }
+        else if (grade.Contains("Epic"))
+        {
+            foreach (var mission in cloneRantadiMissions)
+            {
+                mission.EpiclUnit.Remove(unit);
+            }
+        }
+    }
+
+    private async Task CalculateMissionAtDelete(string grade, string unit)
+    {
+        if (grade.Contains("Nomal"))
+        {
+            foreach (var mission in rantadiMissions)
+            {
+                if (mission.NormalUnit.Contains(unit))
+                {
+                    var index = rantadiMissions.IndexOf(mission);
+                    cloneRantadiMissions[index].NormalUnit.Add(unit);
+                }
+            }
+        }
+        else if (grade.Contains("Magic"))
+        {
+            foreach (var mission in rantadiMissions)
+            {
+                if (mission.MagicUnit.Contains(unit))
+                {
+                    var index = rantadiMissions.IndexOf(mission);
+                    cloneRantadiMissions[index].MagicUnit.Add(unit);
+                }
+            }
+        }
+        else if (grade.Contains("Rare"))
+        {
+            foreach (var mission in rantadiMissions)
+            {
+                if (mission.RarelUnit.Contains(unit))
+                {
+                    var index = rantadiMissions.IndexOf(mission);
+                    cloneRantadiMissions[index].RarelUnit.Add(unit);
+                }
+            }
+        }
+        else if (grade.Contains("Unique"))
+        {
+            foreach (var mission in rantadiMissions)
+            {
+                if (mission.UniquelUnit.Contains(unit))
+                {
+                    var index = rantadiMissions.IndexOf(mission);
+                    cloneRantadiMissions[index].UniquelUnit.Add(unit);
+                }
+            }
+        }
+        else if (grade.Contains("Epic"))
+        {
+            foreach (var mission in rantadiMissions)
+            {
+                if (mission.EpiclUnit.Contains(unit))
+                {
+                    var index = rantadiMissions.IndexOf(mission);
+                    cloneRantadiMissions[index].EpiclUnit.Add(unit);
+                }
+            }
+        }
+    }
+
+    private async Task ToCompleteMission(RantadiMission rantadiMission)
+    {
+        var targetCloneRantadiMission = cloneRantadiMissions.FirstOrDefault(x => x.MissionName.Contains(rantadiMission.MissionName));
+        cloneRantadiMissions.Remove(targetCloneRantadiMission);
+
+        var targetRantadiMission = rantadiMissions.FirstOrDefault(x => x.MissionName.Contains(rantadiMission.MissionName));
+        rantadiMissions.Remove(targetRantadiMission);
+    }
+
+    private async Task SetMissions()
+    {
+        #region 자원주는 미션
+        rantadiMissions.Add(new()
+        {
+            MissionName = "하늘이 Gray색이야!",
+            MissionBenefit = "Mineral 300, Gas 100",
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_ManGhost,
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_Scout,
+                RantadiUnits.Magic_Firebat,
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_DarkTemplar,
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_Defiler,
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "국군의 날",
+            MissionBenefit = "Gas 1001",
+            NormalUnit = new()
+{
+                RantadiUnits.Nomal_Marine,
+                RantadiUnits.Nomal_Marine,
+                RantadiUnits.Nomal_Marine,
+                RantadiUnits.Nomal_Marine,
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Marine,
+                RantadiUnits.Unique_Marine,
+                RantadiUnits.Unique_Marine,
+                RantadiUnits.Unique_Marine,
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+{
+                RantadiUnits.Nomal_Citizen,
+                RantadiUnits.Nomal_Citizen,
+                RantadiUnits.Nomal_Citizen,
+                RantadiUnits.Nomal_Citizen,
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "비선실세",
+            MissionBenefit = "Mineral 503, Gas 503",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_Defiler,
+                RantadiUnits.Magic_DarkTemplar,
+                RantadiUnits.Magic_Scout,
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Ghost,
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Guardian,
+                RantadiUnits.Unique_HighTemplar,
+                RantadiUnits.Unique_DarkArchon,
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "어느 미치광이의 폭주",
+            MissionBenefit = "Mineral 100 , Gas 555",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_ManGhost,
+                RantadiUnits.Magic_ManGhost,
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+{
+                RantadiUnits.Epic_HighTemplar,
+                RantadiUnits.Epic_HighTemplar,
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "귤 먹다가 짜증이",
+            MissionBenefit = "Mineral 300",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Reaver,
+                RantadiUnits.Unique_Reaver,
+                RantadiUnits.Unique_Reaver,
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "카리스마 대빵 큰 리버",
+            MissionBenefit = "Mineral 800, Gas 800",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Reaver,
+                RantadiUnits.Unique_Reaver,
+                RantadiUnits.Unique_Reaver,
+                RantadiUnits.Unique_Reaver,
+                RantadiUnits.Unique_Reaver,
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "히드라의 저주",
+            MissionBenefit = "Mineral 400, Gas 400",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Hydralisk,
+                RantadiUnits.Unique_Hydralisk,
+                RantadiUnits.Unique_Hydralisk,
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        #endregion
+
+        #region 자리 미션
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 빨강",
+            MissionBenefit = "유니크 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_Defiler,
+                RantadiUnits.Magic_Defiler,
+                RantadiUnits.Magic_Defiler,
+                RantadiUnits.Magic_Defiler,
+                RantadiUnits.Magic_Defiler,
+                RantadiUnits.Magic_Defiler,
+                RantadiUnits.Magic_Defiler,
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 파랑",
+            MissionBenefit = "유니크 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_DarkTemplar,
+                RantadiUnits.Magic_DarkTemplar,
+                RantadiUnits.Magic_DarkTemplar,
+                RantadiUnits.Magic_DarkTemplar,
+                RantadiUnits.Magic_DarkTemplar,
+                RantadiUnits.Magic_DarkTemplar,
+                RantadiUnits.Magic_DarkTemplar,
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 연두",
+            MissionBenefit = "유니크 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_WomanGhost,
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 보라",
+            MissionBenefit = "유니크 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_Firebat,
+                RantadiUnits.Magic_Firebat,
+                RantadiUnits.Magic_Firebat,
+                RantadiUnits.Magic_Firebat,
+                RantadiUnits.Magic_Firebat,
+                RantadiUnits.Magic_Firebat,
+                RantadiUnits.Magic_Firebat,
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 주황",
+            MissionBenefit = "유니크 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_SiegeTank,
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 갈색",
+            MissionBenefit = "유니크 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_DarkArchon,
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 빨강",
+            MissionBenefit = "[일반] 선택시민 3명, [유니크] 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Firebat,
+                RantadiUnits.Rare_Firebat,
+                RantadiUnits.Rare_Firebat,
+                RantadiUnits.Rare_Firebat,
+                RantadiUnits.Rare_Firebat,
+                RantadiUnits.Rare_Firebat,
+                RantadiUnits.Rare_Firebat,
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 파랑",
+            MissionBenefit = "[일반] 선택시민 3명, [유니크] 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 연두",
+            MissionBenefit = "[일반] 선택시민 3명, [유니크] 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Goliath,
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 보라",
+            MissionBenefit = "[일반] 선택시민 3명, [유니크] 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Wraith,
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 주황",
+            MissionBenefit = "[일반] 선택시민 3명, [유니크] 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Devourer,
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        rantadiMissions.Add(new()
+        {
+            MissionName = "[매직]자리미션 갈색",
+            MissionBenefit = "[일반] 선택시민 3명, [유니크] 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Arbiter,
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        #endregion
+
+        #region 선택시민 미션
+        rantadiMissions.Add(new()
+        {
+            MissionName = "이상한 취미의 사람들",
+            MissionBenefit = "[일반] 선택시민 3명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Guardian,
+                RantadiUnits.Unique_Zergling,
+                RantadiUnits.Unique_Hydralisk,
+                RantadiUnits.Unique_DarkArchon,
+                RantadiUnits.Unique_Marine,
+                RantadiUnits.Unique_Valkyrie,
+                RantadiUnits.Unique_HighTemplar,
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "스타쉽 트루퍼스",
+            MissionBenefit = "[유니크] 선택시민 1명",
+            NormalUnit = new()
+{
+                RantadiUnits.Nomal_Vulture,
+                RantadiUnits.Nomal_Mutalisk,
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_Defiler,
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Firebat,
+                RantadiUnits.Rare_Devourer,
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Valkyrie,
+                RantadiUnits.Unique_Guardian
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "인디펜던스 데이",
+            MissionBenefit = "[유니크] 선택시민 1명",
+            NormalUnit = new()
+{
+                RantadiUnits.Nomal_Vulture,
+                RantadiUnits.Nomal_Dragoon,
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_DarkArchon,
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Firebat,
+                RantadiUnits.Rare_Dragoon,
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Valkyrie,
+                RantadiUnits.Unique_Reaver
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "날아오르라 주작이여",
+            MissionBenefit = "[일반] 선택시민 2명",
+            NormalUnit = new()
+{
+                RantadiUnits.Magic_Scout,
+                RantadiUnits.Nomal_Mutalisk,
+                RantadiUnits.Nomal_Wraith
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_Scout,
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Arbiter
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Guardian,
+                RantadiUnits.Unique_Valkyrie
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "디스트릭스 9",
+            MissionBenefit = "[레어] 선택시민 2명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_WomanGhost,
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_DarkArchon,
+                RantadiUnits.Magic_DarkArchon,
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Arbiter,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "그래서 DAS는 베이더 겁니까",
+            MissionBenefit = "[일반] 선택시민 1명",
+            NormalUnit = new()
+{
+                RantadiUnits.Nomal_Vulture,
+                RantadiUnits.Nomal_Wraith
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_SiegeTank
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Wraith
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_DarkArchon,
+                RantadiUnits.Unique_Zergling
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "나 빼고 다깻어 나 빼고 다!",
+            MissionBenefit = "[에픽] 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Wraith,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Ghost,
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Reaver,
+                RantadiUnits.Unique_Reaver,
+                RantadiUnits.Unique_Reaver,
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "더 키스 오브 헬게이트",
+            MissionBenefit = "[유니크] 선택시민 2명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+{
+                RantadiUnits.Epic_Lurker,
+                RantadiUnits.Epic_Lurker,
+                RantadiUnits.Epic_Lurker,
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "천년의 기다림",
+            MissionBenefit = "[유니크] 선택시민 1명",
+            NormalUnit = new()
+            {
+
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+            {
+
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+{
+                RantadiUnits.Nomal_Citizen,
+                RantadiUnits.Nomal_Citizen,
+                RantadiUnits.Nomal_Citizen,
+                RantadiUnits.Nomal_Citizen,
+                RantadiUnits.Nomal_Citizen,
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "천사의 게임들",
+            MissionBenefit = "[에픽] 선택시민 1명, Mineral 1000, Gas 4",
+            NormalUnit = new()
+{
+                RantadiUnits.Nomal_Dragoon,
+                RantadiUnits.Nomal_Scout
+            },
+            MagicUnit = new()
+{
+                RantadiUnits.Magic_SiegeTank,
+                RantadiUnits.Magic_Scout,
+                RantadiUnits.Magic_DarkArchon
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Devourer,
+                RantadiUnits.Rare_Ghost,
+                RantadiUnits.Rare_Dragoon,
+            },
+            UniquelUnit = new()
+{
+                RantadiUnits.Unique_Reaver,
+                RantadiUnits.Unique_HighTemplar,
+                RantadiUnits.Unique_DarkArchon
+            },
+            EpiclUnit = new()
+{
+                RantadiUnits.Epic_Carrier,
+                RantadiUnits.Epic_HighTemplar
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "버림받은 자들의 심장",
+            MissionBenefit = "Life 6개",
+            NormalUnit = new()
+{
+                RantadiUnits.Nomal_Ultralist,
+                RantadiUnits.Nomal_Ultralist,
+                RantadiUnits.Nomal_Ultralist,
+                RantadiUnits.Nomal_Mutalisk,
+                RantadiUnits.Nomal_Mutalisk,
+                RantadiUnits.Nomal_Mutalisk,
+            },
+            MagicUnit = new()
+            {
+            },
+            RarelUnit = new()
+{
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Goliath,
+                RantadiUnits.Rare_Defiler,
+                RantadiUnits.Rare_Defiler,
+                RantadiUnits.Rare_Defiler,
+            },
+            UniquelUnit = new()
+            {
+
+            },
+            EpiclUnit = new()
+            {
+
+            },
+            Citizen = new()
+            {
+
+            },
+        });
+        #endregion
+
+        var serialized = JsonConvert.SerializeObject(rantadiMissions);
+
+        if (serialized is not null)
+        {
+            cloneRantadiMissions = JsonConvert.DeserializeObject<List<RantadiMission>>(serialized);
+        }
+    }
+}

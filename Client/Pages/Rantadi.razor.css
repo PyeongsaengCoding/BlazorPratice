@@ -1,0 +1,42 @@
+
+.bg-color-black{
+    background-color: black;
+}
+
+.intro-mission_color {
+    background-color: #adb5bd;
+    font-weight: 600;
+}
+
+.nomal-unit_color {
+    background-color: #6f42c1;
+    font-weight: 600;
+    color: white;
+}
+
+.magic-unit_color {
+    background-color: #198754;
+    font-weight: 600;
+    color: white;
+}
+
+.rare-unit_color {
+    background-color: #0dcaf0;
+    font-weight: 600;
+    color: black;
+}
+
+.unique-unit_color {
+    background-color: #dc3545;
+    font-weight: 600;
+}
+
+.epic-unit_color {
+    background-color: #ffc107;
+    font-weight: 600;
+    color: black;
+}
+
+.vertical-align-center{
+    vertical-align: middle;
+}
