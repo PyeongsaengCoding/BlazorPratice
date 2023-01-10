@@ -34,7 +34,7 @@ namespace BlazorPratice.Shared.Models
         public const string Magic_Scout = "스카웃";
         public const string Magic_Firebat = "파이어뱃";
         public const string Magic_SiegeTank = "시즈탱크";
-        public const string Magic_DarkTemplar = "다크템";
+        public const string Magic_DarkTemplar = "닥템";
         public const string Magic_DarkArchon = "다크아칸";
         public const string Magic_Defiler = "디파일러";
 
