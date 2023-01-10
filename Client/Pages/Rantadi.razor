@@ -2,15 +2,23 @@
 @using Newtonsoft.Json
 
 <div class="d-flex flex-column bg-color-black h-100">
-    <div class="d-flex flex-wrap">
-        @foreach (var position in positions)
-        {
-            <button class="btn text-white"
-                    @onclick="@(e => selectPosition(position))">
-                @position
-            </button>
-        }
-    </div>
+    @if (isSelectedPosition)
+    {
+
+    }
+    else
+    {
+        <div class="d-flex flex-wrap">
+            @foreach (var position in positions)
+            {
+                <button class="btn text-white"
+                        @onclick="@(e => selectPosition(position))">
+                    @position
+                </button>
+            }
+        </div>
+    }
+
     <div class="d-flex flex-column flex-wrap">
         @foreach (var unitByGrade in UnitListDict)
         {
@@ -239,6 +247,8 @@
 {
         "빨강","파랑","초록","보라","주황","갈색"
     };
+
+    private bool isSelectedPosition;
 
     Dictionary<string, List<string>> OwnUnitDict = new();
 
@@ -471,6 +481,8 @@
                 rantadiMissions.RemoveAll(x => x.MissionName.Contains(position));
             }
         }
+
+        isSelectedPosition = true;
     }
 
     private async Task SetMissions()
