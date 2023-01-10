@@ -490,6 +490,41 @@
         #region 비교적 쉬운 미션
         rantadiMissions.Add(new()
         {
+            MissionName = "편식은 금물!",
+            MissionBenefit = "Mineral 300",
+            NormalUnit = new()
+            {
+                RantadiUnits.Nomal_Hydralisk,
+                RantadiUnits.Nomal_Vulture,
+                RantadiUnits.Nomal_Dragoon,
+                RantadiUnits.Nomal_Marine,
+                RantadiUnits.Nomal_Wraith,
+                RantadiUnits.Nomal_Scout,
+                RantadiUnits.Nomal_Ultralist,
+                RantadiUnits.Nomal_Mutalisk
+            },
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "그남자 그리고 그여자",
+            MissionBenefit = "Mineral 400",
+            MagicUnit = new()
+            {
+                RantadiUnits.Magic_ManGhost,
+                RantadiUnits.Magic_WomanGhost
+            }
+        });
+
+        rantadiMissions.Add(new()
+        {
+            MissionName = "언럭키 세븐 (레어 종류 무관 타워 7개)",
+            MissionBenefit = "Mineral 300",
+        });
+
+
+        rantadiMissions.Add(new()
+        {
             MissionName = "하늘이 Gray색이야!",
             MissionBenefit = "Mineral 300, Gas 100",
             MagicUnit = new()
