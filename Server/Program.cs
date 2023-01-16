@@ -3,12 +3,9 @@ using Microsoft.AspNetCore.ResponseCompression;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
-// Register required services
-builder.Services.AddOpenApiDocument(config =>
-config.Title = "AwesomeBlazor API");
 
 var app = builder.Build();
 
@@ -28,9 +25,6 @@ app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-
-// Generate and serve the OpenAPI specification
-app.UseOpenApi();
 
 app.UseRouting();
 
